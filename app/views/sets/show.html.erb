@@ -1,0 +1,13 @@
+<html>
+<body>
+<% str='' %>
+<% @photos.each do |photo| %>
+    <% str+="<a href=\"#{photo[:url]}\" title=\"#{photo[:title]} by #{photo[:user]}, on Flickr\"><img src=\"#{photo[:url]}\" width=\"1024\" height=\"765\" alt=\"Photo inserted by Craigsflick.com\"></a><br />\n\n" %>
+<% end %>
+<label for="output">Copy the links below to Craigslist</label><br />
+<textarea id="output" rows="10" cols="90"><%= str %></textarea>
+<% @photos.each do |photo| %>
+    <img src="<%= photo[:url] %>" alt=""><br />
+<% end %>
+</body>
+</html>

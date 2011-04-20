@@ -1,0 +1,77 @@
+class Flickr
+
+  def initialize
+    FlickRaw.api_key = credentials[:key]
+    FlickRaw.shared_secret = credentials[:secret]
+  end
+
+
+  def url
+    frob = flickr.auth.getFrob
+    FlickRaw.auth_url :frob => frob, :perms => 'read'
+  end
+
+  def login(frob)
+    begin
+      auth = flickr.auth.getToken :frob => frob
+      login = flickr.test.login
+      {:auth_token => auth.token, :user_id => login.id}
+    rescue FlickRaw::FailedResponse
+      nil
+    end
+  end
+
+  def sets(user_id)
+    sets = flickr.photosets.getList(:user_id => user_id)
+    sets.map do |set|
+      {
+          :id => set.id,
+          :name => set.title,
+          :description => set.description,
+          :count => set.photos,
+          :primary_url => FlickRaw.url_t(set_normalize(set))
+      }
+    end
+  end
+
+  def photos(set_id)
+    photos = flickr.photosets.getPhotos(:photoset_id => set_id, :extras => "url_m")
+
+    photos.photo.map do |photo|
+      {
+        :url => photo.url_m,
+        :name => photo.title,
+        :user => photos.ownername
+      }
+    end
+  end
+
+
+
+  def set_normalize(set)
+    PhotoFromSet.new(set)
+  end
+
+
+  def credentials
+    if Rails.env.development?
+      {:key => '00df746ec86d858b365921cc8131356c', :secret => '37c0d7244bc8b327'}
+    else
+
+    end
+  end
+
+end
+
+class PhotoFromSet
+
+  attr_reader :id, :farm, :secret, :server
+
+  def initialize(set)
+    @id = set.primary
+    @farm = set.farm
+    @secret = set.secret
+    @server = set.server
+  end
+
+end
