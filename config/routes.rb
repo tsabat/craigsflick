@@ -4,9 +4,14 @@ Craigsflick::Application.routes.draw do
 
   resources :sets
 
-  resources :sessions
+  controller :permissions do
+    delete 'logout' => :destroy
+    post 'permissions' => :create
+  end
 
   resources :permissions
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

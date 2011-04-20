@@ -22,7 +22,8 @@ class Flickr
   end
 
   def sets(user_id)
-    sets = flickr.photosets.getList(:user_id => user_id)
+    begin
+       sets = flickr.photosets.getList(:user_id => user_id)
     sets.map do |set|
       {
           :id => set.id,
@@ -32,6 +33,10 @@ class Flickr
           :primary_url => FlickRaw.url_t(set_normalize(set))
       }
     end
+    rescue FlickRaw::FailedResponse
+       nil
+    end
+
   end
 
   def photos(set_id)
@@ -57,7 +62,7 @@ class Flickr
     if Rails.env.development?
       {:key => '00df746ec86d858b365921cc8131356c', :secret => '37c0d7244bc8b327'}
     else
-
+      {:key => 'f3283743a59586a7bc3cabe615336034', :secret => '10a545042e3e1b8c'}
     end
   end
 

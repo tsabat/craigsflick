@@ -15,7 +15,22 @@ class PermissionsController < ApplicationController
   end
 
   def index
+
+  end
+
+  def create
     flick = Flickr.new
-    @flickr_auth_url = flick.url
+    redirect_to flick.url
+  end
+
+  def destroy
+    if session[:user_id]
+      session[:user_id] = nil
+    end
+    redirect_to permissions_path, :notice => "You have been logged out."
+  end
+
+  def show
+    render :text => "You are here"
   end
 end

@@ -3,12 +3,13 @@
 <head>
   <title>Craigsflick</title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 </head>
 <body>
+<% if session[:user_id] %>
+      <p><%= button_to "Logout", '/permissions/logout/', :method => :delete %></p>
+<% end %>
 
 <%= yield %>
-
 </body>
 </html>

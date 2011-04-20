@@ -1,2 +1,2 @@
-<%= @notice %>
-<%= link_to @flickr_auth_url, @flickr_auth_url %>
+<%= notice %><br />
+<%= button_to "Authenticate with Flickr.", permissions_path, :method => :post %>

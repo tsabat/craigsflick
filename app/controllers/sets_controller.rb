@@ -4,7 +4,11 @@ class SetsController < ApplicationController
     @sets = flick.sets(session[:user_id])
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html do
+        if !@sets
+          redirect_to permissions_path, :notice => "No Sets Found."
+        end
+      end
     end
   end
 
