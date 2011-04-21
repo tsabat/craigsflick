@@ -1,2 +1,3 @@
 <%= notice %><br />
-<%= button_to "Authenticate with Flickr.", permissions_path, :method => :post %>
+<%= session[:user_id] %>
+<%= button_to "Click me to get started.", permissions_path, :method => :post %>

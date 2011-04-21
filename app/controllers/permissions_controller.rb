@@ -15,7 +15,9 @@ class PermissionsController < ApplicationController
   end
 
   def index
-
+    if session[:user_id]
+      redirect_to(sets_url)
+    end
   end
 
   def create
@@ -30,7 +32,4 @@ class PermissionsController < ApplicationController
     redirect_to permissions_path, :notice => "You have been logged out."
   end
 
-  def show
-    render :text => "You are here"
-  end
 end

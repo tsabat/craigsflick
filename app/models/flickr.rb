@@ -5,7 +5,6 @@ class Flickr
     FlickRaw.shared_secret = credentials[:secret]
   end
 
-
   def url
     frob = flickr.auth.getFrob
     FlickRaw.auth_url :frob => frob, :perms => 'read'
@@ -23,18 +22,18 @@ class Flickr
 
   def sets(user_id)
     begin
-       sets = flickr.photosets.getList(:user_id => user_id)
-    sets.map do |set|
-      {
-          :id => set.id,
-          :name => set.title,
-          :description => set.description,
-          :count => set.photos,
-          :primary_url => FlickRaw.url_t(set_normalize(set))
-      }
-    end
+      sets = flickr.photosets.getList(:user_id => user_id)
+      sets.map do |set|
+        {
+            :id => set.id,
+            :name => set.title,
+            :description => set.description,
+            :count => set.photos,
+            :primary_url => FlickRaw.url_t(set_normalize(set))
+        }
+      end
     rescue FlickRaw::FailedResponse
-       nil
+      nil
     end
 
   end
@@ -44,14 +43,12 @@ class Flickr
 
     photos.photo.map do |photo|
       {
-        :url => photo.url_m,
-        :name => photo.title,
-        :user => photos.ownername
+          :url => photo.url_m,
+          :name => photo.title,
+          :user => photos.ownername
       }
     end
   end
-
-
 
   def set_normalize(set)
     PhotoFromSet.new(set)

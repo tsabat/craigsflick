@@ -7,9 +7,10 @@
 </head>
 <body>
 <% if session[:user_id] %>
-      <p><%= button_to "Logout", '/permissions/logout/', :method => :delete %></p>
+    <div>
+      <%= button_to "Logout", '/permissions/logout/', :method => :delete %>
+    </div>
 <% end %>
-
 <%= yield %>
 </body>
 </html>
