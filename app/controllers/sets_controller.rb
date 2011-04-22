@@ -1,6 +1,6 @@
 class SetsController < ApplicationController
   def index
-    flick = Flickr.new
+    flick = Flickr.new(request.url)
     @sets = flick.sets(session[:user_id])
 
     respond_to do |format|
@@ -13,7 +13,7 @@ class SetsController < ApplicationController
   end
 
   def show
-    flick = Flickr.new
+    flick = Flickr.new(request.url)
     @photos = flick.photos(params[:id])
   end
 end

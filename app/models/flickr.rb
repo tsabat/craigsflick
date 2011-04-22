@@ -1,6 +1,7 @@
 class Flickr
 
-  def initialize
+  def initialize(url)
+    @url = url
     FlickRaw.api_key = credentials[:key]
     FlickRaw.shared_secret = credentials[:secret]
   end
@@ -57,7 +58,14 @@ class Flickr
 
   def credentials
     if Rails.env.development?
-      {:key => '00df746ec86d858b365921cc8131356c', :secret => '37c0d7244bc8b327'}
+      if @url.include? 'fuck'
+          #chris
+          {:key => '50d9ac23dbe5f2861533ba5d7298857b', :secret => '8f58d0de127827d0'}
+        elsif @url.include? 'winning'
+          #tim
+          {:key => '00df746ec86d858b365921cc8131356c', :secret => '37c0d7244bc8b327'}
+      end
+
     else
       {:key => 'f3283743a59586a7bc3cabe615336034', :secret => '10a545042e3e1b8c'}
     end

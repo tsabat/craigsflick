@@ -1,7 +1,7 @@
 class PermissionsController < ApplicationController
 
   def authenticate
-    flick = Flickr.new
+    flick = Flickr.new(request.url)
     if frob = request[:frob]
       if login = flick.login(frob)
         session[:user_id] = login[:user_id]
@@ -21,7 +21,7 @@ class PermissionsController < ApplicationController
   end
 
   def create
-    flick = Flickr.new
+    flick = Flickr.new(request.url)
     redirect_to flick.url
   end
 
